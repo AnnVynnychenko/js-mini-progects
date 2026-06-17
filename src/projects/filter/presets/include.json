@@ -10,5 +10,7 @@
     { "name": "Erik", "email": "erik.novak2@gmail.com" },
     { "name": "Jan", "email": "jan.dvorak3@gmail.com" },
     { "name": "Jan", "email": "jan.dvorak4@gmail.com" }
-  ]
+  ],
+
+  "condition": { "include": [{ "name": "Jan" }], "sortBy": ["email"] }
 }
