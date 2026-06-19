@@ -18,20 +18,24 @@ function validateFields(data, conditions) {
 async function handleClick(event) {
   if (event.target.classList.contains('preset-btn')) {
     const presetKey = event.target.dataset.preset;
+
     try {
       const response = await fetch(`./presets/${presetKey}.json`);
 
       if (!response.ok) throw new Error('File not found');
+
       const preset = await response.json();
 
-      jsonInput.value = JSON.stringify({ data: preset.data }, null, 2);
-      conditions.value = JSON.stringify(
-        { condition: preset.condition },
-        null,
-        2
-      );
+      if (presetKey === 'user-data') {
+        const rawData = preset.data || preset;
+        jsonInput.value = JSON.stringify(rawData, null, 2);
+      } else {
+        const rawConditions = preset.condition || preset;
+        conditions.value = JSON.stringify(rawConditions, null, 2);
+      }
     } catch (error) {
       console.error('Error loading preset:', error.message);
+      alert(`Could not load preset file: ${presetKey}.json`);
     }
   }
 }
@@ -42,11 +46,13 @@ function handleSubmit(event) {
   const rawDataText = jsonInput.value.trim();
   const rawConditionsText = conditions.value.trim();
 
+  let dataObj = {};
+  let conditionsObj = {};
+
   if (!validateFields(rawDataText, rawConditionsText)) {
     return;
   }
-  let dataObj = {};
-  let conditionsObj = {};
+
   try {
     dataObj = JSON.parse(rawDataText);
     conditionsObj = JSON.parse(rawConditionsText);
@@ -60,7 +66,6 @@ function handleSubmit(event) {
 
   try {
     const dataArr = dataObj.data || dataObj;
-
     if (!Array.isArray(dataArr)) {
       throw new Error('Data must be an array');
     }
