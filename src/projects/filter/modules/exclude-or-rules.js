@@ -3,6 +3,7 @@ export const excludeOrByKeys = (data, condition) => {
   return data.filter(item => {
     const excludeData = condition.some(rule => {
       const ruleKey = Object.keys(rule);
+      console.log(ruleKey);
       return ruleKey.every(key => item[key] === rule[key]);
     });
     return !excludeData;

@@ -1,6 +1,7 @@
 import { filterByCondition } from './modules/filter-rules.js';
 import { sortByCondition } from './modules/sort-rules.js';
 import { excludeOrByKeys } from './modules/exclude-or-rules.js';
+import { excludeAnd } from './modules/exclude-and-rules.js';
 
 const filterForm = document.querySelector('.filter-form');
 const jsonInput = document.querySelector('#json-input');
@@ -19,7 +20,6 @@ function validateFields(data, conditions) {
 async function handleClick(event) {
   if (event.target.classList.contains('preset-btn')) {
     const presetKey = event.target.dataset.preset;
-
     try {
       const response = await fetch(`./presets/${presetKey}.json`);
 
@@ -44,10 +44,16 @@ async function handleClick(event) {
 function handleSubmit(event) {
   event.preventDefault();
 
-  const rawDataText = jsonInput.value.trim();
+  let rawDataText = '';
+
+  if (jsonOutput.value.trim() !== '') {
+    rawDataText = jsonOutput.value.trim();
+  } else {
+    rawDataText = jsonInput.value.trim();
+  }
   const rawConditionsText = conditions.value.trim();
 
-  let dataObj = {};
+  let userData = {};
   let conditionsObj = {};
 
   if (!validateFields(rawDataText, rawConditionsText)) {
@@ -55,7 +61,7 @@ function handleSubmit(event) {
   }
 
   try {
-    dataObj = JSON.parse(rawDataText);
+    userData = JSON.parse(rawDataText);
     conditionsObj = JSON.parse(rawConditionsText);
   } catch (parseError) {
     console.error('Parsing error:', parseError.message);
@@ -66,26 +72,35 @@ function handleSubmit(event) {
   }
 
   try {
-    const dataArr = dataObj.data || dataObj;
-    if (!Array.isArray(dataArr)) {
+    const conditionsBody = conditionsObj;
+
+    let currentResult = [...userData];
+
+    if (!Array.isArray(currentResult)) {
       throw new Error('Data must be an array');
     }
 
-    const conditionsBody = conditionsObj.condition || conditionsObj;
-
-    let currentResult = [...dataArr];
-
     if (conditionsBody.include) {
-      const conditionFilterArr = conditionsBody.include;
-      const conditionSortByArr = conditionsBody.sortBy;
-      const filterResult = filterByCondition(dataArr, conditionFilterArr);
-      currentResult = sortByCondition(filterResult, conditionSortByArr);
-    } else {
-      const conditionsExcludeOr = conditionsBody.exclude;
-      currentResult = excludeOrByKeys(dataArr, conditionsExcludeOr);
+      const conditionFilter = conditionsBody.include;
+      currentResult = filterByCondition(currentResult, conditionFilter);
     }
 
-    jsonOutput.value = JSON.stringify(currentResult);
+    if (conditionsBody.excludeOR) {
+      const conditionExcludeOr = conditionsBody.excludeOR;
+      currentResult = excludeOrByKeys(currentResult, conditionExcludeOr);
+    }
+
+    if (conditionsBody.excludeAND) {
+      const conditionExcludeAnd = conditionsBody.excludeAND;
+      currentResult = excludeAnd(currentResult, conditionExcludeAnd);
+    }
+
+    if (conditionsBody.sortBy) {
+      const conditionSortBy = conditionsBody.sortBy;
+      currentResult = sortByCondition(currentResult, conditionSortBy);
+    }
+
+    jsonOutput.value = JSON.stringify(currentResult, null, 2);
   } catch (validationError) {
     console.error('Validation error:', validationError.message);
     alert(validationError.message);

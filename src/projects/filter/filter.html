@@ -14,10 +14,15 @@
       </header>
       <main>
         <section class="presets-section">
-          <button class="preset-btn" type="button" data-preset="user-data">
+          <span class="btn-labels">Load Users' Data:</span>
+          <button
+            class="preset-btn load-data"
+            type="button"
+            data-preset="user-data"
+          >
             Load Test Preset
           </button>
-          <span>Load Conditions Presets:</span>
+          <span class="btn-labels">Load Conditions Presets:</span>
           <button class="preset-btn" type="button" data-preset="include">
             Include
           </button>
@@ -27,19 +32,31 @@
           <button class="preset-btn" type="button" data-preset="exclude-and">
             Exclude AND
           </button>
+          <button class="preset-btn" type="button" data-preset="sort">
+            Sort
+          </button>
         </section>
         <form class="filter-form">
-          <label>
-            Input JSON (Data & Conditions)
+          <label class="field-name">
+            Users' Data JSON
             <textarea
               id="json-input"
               class="panel-textarea"
               name="jsonInput"
-              placeholder="Click any button above to display the data."
+              placeholder="Click a button above to display the data."
             ></textarea>
           </label>
-          <label>
-            Resulting JSON (Output)
+          <label class="field-name">
+            Filtering and Sorting Conditions JSON
+            <textarea
+              id="conditions"
+              class="panel-textarea"
+              name="jsonCondition"
+              placeholder="Click a button above to display the conditions."
+            ></textarea>
+          </label>
+          <label class="field-name panel-label">
+            Resulting JSON
             <textarea
               id="json-output"
               class="panel-textarea"
@@ -47,19 +64,15 @@
               placeholder="Processed results will appear here..."
             ></textarea>
           </label>
-          <button type="submit" class="process-btn">Process Data</button>
-          <label class="panel-label">
-            Filtering and Sorting Conditions
-            <textarea
-              id="conditions"
-              name="jsonCondition"
-              placeholder="Click any button above to display the data."
-            ></textarea>
-          </label>
+          <div class="actions-wrapper">
+            <button type="submit" class="process-btn">Process Data</button>
+            <button type="button" id="reset-btn" class="reset-btn">
+              Reset All
+            </button>
+          </div>
         </form>
       </main>
     </div>
     <script type="module" src="./app-filter.js"></script>
   </body>
 </html>
->

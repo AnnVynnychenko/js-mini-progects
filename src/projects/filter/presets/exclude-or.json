@@ -1,6 +1,6 @@
 {
   "condition": {
-    "exclude": [
+    "excludeOR": [
       { "name": "Tereza" },
       { "email": "tereza.kratochvilova@gmail.com" }
     ]
