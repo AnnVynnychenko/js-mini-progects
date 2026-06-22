@@ -65,13 +65,12 @@
 .panel-textarea {
   width: 100%;
   min-height: 220px;
+  padding: 16px;
   font-family: 'Fira Code', monospace;
   font-size: 0.85rem;
   line-height: 1.5;
-  padding: 16px;
   background-color: var(--code-bg);
   color: var(--code-text);
-  border: 1px solid var(--result-color);
   border-radius: var(--element-border-radius);
   resize: vertical;
   transition: var(--transition);
@@ -79,21 +78,24 @@
 
 .panel-textarea:is(:hover, :focus) {
   outline: none;
-  background-color: #28283d;
-  border: 2px solid #9fa2ff;
-  box-shadow: 0 0 10px rgba(159, 162, 255, 0.5);
+  background-color: var(--bg-hover);
+  border: 2px solid var(--border-hover);
+  box-shadow: var(--shadow-hover);
   cursor: text;
 }
 
 .panel-textarea::placeholder {
-  color: #626880;
+  color: var(--placeholder);
 }
 
 #json-output {
-  background-color: #161622;
-  border-color: #2e2f42;
+  background-color: var(--bg-output);
 }
 
+#json-output:is(:hover, :focus) {
+  border: none;
+  box-shadow: none;
+}
 .actions-wrapper {
   display: flex;
   gap: 16px;
@@ -103,21 +105,20 @@
 
 .process-btn {
   flex: 1;
+  padding: 14px 24px;
   font-size: 1rem;
   line-height: 1.5;
   letter-spacing: 0.04em;
-  padding: 14px 24px;
   background-color: var(--accent-color);
   color: var(--btn-text-color);
   border-radius: var(--element-border-radius);
   border: none;
-  box-shadow: 0 4px 12px rgba(77, 90, 229, 0.3);
+  box-shadow: var(--shadow-btn);
   transition: var(--transition);
 }
 
 .process-btn:is(:hover, :focus) {
   background-color: var(--accent-hover);
-  box-shadow: 0 6px 20px rgba(77, 90, 229, 0.4);
   transform: translateY(-1px);
 }
 
@@ -128,16 +129,16 @@
   line-height: 1.5;
   border: none;
   border-radius: var(--element-border-radius);
-  color: #ff858f;
-  background-color: rgba(224, 108, 117, 0.12);
+  color: var(--btn-reset-color);
+  background-color: var(--bg--color-reset);
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
 }
 
 #reset-btn:is(:hover, :focus) {
-  color: #ffffff;
-  background-color: #e06c75;
-  border-color: #e06c75;
-  box-shadow: 0 0 12px rgba(224, 108, 117, 0.4);
+  color: var(--btn-text-color);
+  background-color: var(--bg-reset-hover);
+  border-color: var(--border-reset-hover);
+  box-shadow: var(--shadow-reset-hover);
   transform: translateY(-1px);
 }

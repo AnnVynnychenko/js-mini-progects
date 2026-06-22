@@ -14,8 +14,19 @@
   --result-color: #2e2f42;
   --code-bg: #1e1e2e;
   --code-text: #cdd6f4;
+  --bg-hover: #28283d;
+  --border-hover: #9fa2ff;
+  --placeholder: #626880;
+  --bg-output: #161622;
+  --btn-reset-color: #ff858f;
+  --bg-reset-hover: #e06c75;
+  --border-reset-hover: #e06c75;
+  --bg--color-reset: rgba(224, 108, 117, 0.12);
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 0 10px rgba(159, 162, 255, 0.5);
+  --shadow-reset-hover: 0 0 12px rgba(224, 108, 117, 0.4);
+  --shadow-btn: 0 4px 12px rgba(77, 90, 229, 0.3);
   --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
