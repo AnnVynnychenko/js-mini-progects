@@ -10,6 +10,8 @@ const conditions = document.querySelector('#conditions');
 const presetsSection = document.querySelector('.presets-section');
 const resetBtn = document.querySelector('#reset-btn');
 
+const baseUrl = new URL('.', import.meta.url).href;
+
 function validateFields(data, conditions) {
   if (!data || !conditions) {
     alert('Please fill in both fields!');
@@ -22,7 +24,7 @@ async function handleClick(event) {
   if (event.target.classList.contains('preset-btn')) {
     const presetKey = event.target.dataset.preset;
     try {
-      const response = await fetch(`presets/${presetKey}.json`);
+      const response = await fetch(`${baseUrl}/presets/${presetKey}.json`);
 
       if (!response.ok) throw new Error('File not found');
 
