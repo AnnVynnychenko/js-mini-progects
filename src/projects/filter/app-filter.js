@@ -22,9 +22,9 @@ async function handleClick(event) {
   if (event.target.classList.contains('preset-btn')) {
     const presetKey = event.target.dataset.preset;
     try {
-      const response = await fetch(
-        `${import.meta.env.BASE_URL}presets/${presetKey}.json`
-      );
+      const url = new URL(`./presets/${presetKey}.json`, import.meta.url);
+
+      const response = await fetch(url);
 
       if (!response.ok) throw new Error('File not found');
 
