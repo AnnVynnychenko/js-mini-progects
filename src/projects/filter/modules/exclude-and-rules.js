@@ -3,7 +3,9 @@ export const excludeAnd = (data, condition) => {
   return data.filter(item => {
     const excludeData = condition.every(rule => {
       const conditionKeys = Object.keys(rule);
-      return conditionKeys.every(key => rule[key] === item[key]);
+      return conditionKeys.every(
+        key => rule[key].toLowerCase() === item[key].toLowerCase()
+      );
     });
     return !excludeData;
   });
